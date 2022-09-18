@@ -13,9 +13,36 @@ let editFlag = false;
 let editID = "";
 
 // ****** EVENT LISTENERS **********
+// submit form
+form.addEventListener("submit", addItem);
 
 // ****** FUNCTIONS **********
+function addItem(e) {
+  e.preventDefault();
+  //   if (grocery.value === "") return;
+  const value = grocery.value;
+  const id = new Date().getTime().toString();
+  console.log(`value: ${value}, id: ${id}`);
 
+  if (value && !editFlag) {
+    console.log("add item to the list");
+  } else if (value && editFlag) {
+    console.log("editing");
+  } else {
+    displayAlert("please enter value", "danger");
+  }
+}
+
+// display Alert
+function displayAlert(text, action) {
+  alert.textContent = text;
+  alert.classList.add(`alert-${action}`);
+  // remove alert
+  setTimeout(() => {
+    alert.textContent = "";
+    alert.classList.remove(`alert-${action}`);
+  }, 2000);
+}
 // ****** LOCAL STORAGE **********
 
 // ****** SETUP ITEMS **********
