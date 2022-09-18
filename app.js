@@ -16,6 +16,9 @@ let editID = "";
 // submit form
 form.addEventListener("submit", addItem);
 
+// clear items
+clearBtn.addEventListener("click", clearItems);
+
 // ****** FUNCTIONS **********
 function addItem(e) {
   e.preventDefault();
@@ -76,6 +79,21 @@ function setBackToDefault() {
   editID = "";
   submitBtn.textContent = "submit";
 }
+// clear items
+function clearItems() {
+  const items = document.querySelectorAll(".grocery-item");
+  if (items.length > 0) {
+    items.forEach((item) => {
+      list.removeChild(item);
+    });
+  }
+  container.classList.remove("show-container");
+  displayAlert("empty list", "danger");
+  setBackToDefault();
+  //   localStorage.removeItem('list')
+}
+
+// END OF FUNCITONS
 // ****** LOCAL STORAGE **********
 function addToLocalStorage(id, value) {
   console.log(`${value} added to local storage with ID: ${id}`);
