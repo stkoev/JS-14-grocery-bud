@@ -129,10 +129,23 @@ function editItem(e) {
 // END OF FUNCITONS
 // ****** LOCAL STORAGE **********
 function addToLocalStorage(id, value) {
-  console.log(`${value} added to local storage with ID: ${id}`);
+  const grocery = { id, value };
+  let items = getLocalStorage();
+  items.push(grocery);
+  localStorage.setItem("list", JSON.stringify(items));
 }
 // remove from local storage
-function removeFromLocalStorage(id) {}
+function removeFromLocalStorage(id) {
+  let items = getLocalStorage();
+  items = items.filter((item) => {
+    return item.id !== id;
+  });
+  localStorage.setItem("list", JSON.stringify(items));
+}
+
+function getLocalStorage() {
+  return JSON.parse(localStorage.getItem("list")) || [];
+}
 
 function editLocalStorage(id, value) {}
 // ****** SETUP ITEMS **********
