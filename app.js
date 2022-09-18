@@ -25,7 +25,33 @@ function addItem(e) {
   console.log(`value: ${value}, id: ${id}`);
 
   if (value && !editFlag) {
-    console.log("add item to the list");
+    const element = document.createElement("article");
+    // add class
+    element.classList.add("grocery-item");
+    // add ID
+    const attr = document.createAttribute("data-id");
+    attr.value = id;
+    element.setAttributeNode(attr);
+    element.innerHTML = `            
+        <p class="title">${value}</p>
+        <div class="btn-container">
+            <button type="button" class="edit-btn">
+            <i class="fas fa-edit"></i>
+            </button>
+            <button type="button" class="delete-btn">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>`;
+    // append child
+    list.appendChild(element);
+    // display alert
+    displayAlert(`${value} added to the list`, "success");
+    // show container
+    container.classList.add("show-container");
+    // add to Local Storage
+    addToLocalStorage(id, value);
+    // set back to default
+    setBackToDefault();
   } else if (value && editFlag) {
     console.log("editing");
   } else {
@@ -43,6 +69,13 @@ function displayAlert(text, action) {
     alert.classList.remove(`alert-${action}`);
   }, 2000);
 }
+// set back to default
+function setBackToDefault() {
+  console.log("set back to default");
+}
 // ****** LOCAL STORAGE **********
+function addToLocalStorage(id, value) {
+  console.log(`${value} added to local storage with ID: ${id}`);
+}
 
 // ****** SETUP ITEMS **********
