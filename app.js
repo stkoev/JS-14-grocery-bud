@@ -45,6 +45,10 @@ function addItem(e) {
                 <i class="fas fa-trash"></i>
             </button>
         </div>`;
+    const deleteBtn = element.querySelector(".delete-btn");
+    const editBtn = element.querySelector(".edit-btn");
+    deleteBtn.addEventListener("click", deleteItem);
+    editBtn.addEventListener("click", editItem);
     // append child
     list.appendChild(element);
     // display alert
@@ -56,7 +60,11 @@ function addItem(e) {
     // set back to default
     setBackToDefault();
   } else if (value && editFlag) {
-    console.log("editing");
+    editElement.innerHTML = value;
+    displayAlert("value changed", "success");
+    // edit local storage
+    editLocalStorage(editID, value);
+    setBackToDefault();
   } else {
     displayAlert("please enter value", "danger");
   }
@@ -93,10 +101,38 @@ function clearItems() {
   //   localStorage.removeItem('list')
 }
 
+// edit function
+function deleteItem(e) {
+  const element = e.currentTarget.parentElement.parentElement;
+  const id = element.dataset.id;
+  console.log(element);
+  list.removeChild(element);
+  if (list.children.length === 0) {
+    container.classList.remove("show-container");
+  }
+  displayAlert("item removed", "danger");
+  setBackToDefault();
+  //   remove from local storage
+  removeFromLocalStorage(id);
+}
+// edit function
+function editItem(e) {
+  const element = e.currentTarget.parentElement.parentElement;
+  //   set edit item
+  editElement = e.currentTarget.parentElement.previousElementSibling;
+  grocery.value = editElement.innerHTML;
+  editFlag = true;
+  editID = element.dataset.id;
+  submitBtn.textContent = "edit";
+}
+
 // END OF FUNCITONS
 // ****** LOCAL STORAGE **********
 function addToLocalStorage(id, value) {
   console.log(`${value} added to local storage with ID: ${id}`);
 }
+// remove from local storage
+function removeFromLocalStorage(id) {}
 
+function editLocalStorage(id, value) {}
 // ****** SETUP ITEMS **********
